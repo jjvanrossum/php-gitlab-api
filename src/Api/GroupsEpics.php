@@ -55,6 +55,7 @@ class GroupsEpics extends AbstractApi
             ->setAllowedValues('state', [self::STATE_ALL, self::STATE_OPENED, self::STATE_CLOSED])
         ;
         $resolver->setDefined('search');
+        $resolver->setDefined('updated_after');
 
         return $this->get('groups/'.self::encodePath($group_id).'/epics', $resolver->resolve($parameters));
     }
@@ -113,5 +114,27 @@ class GroupsEpics extends AbstractApi
     public function issues($group_id, int $epic_iid)
     {
         return $this->get('groups/'.self::encodePath($group_id).'/epics/'.self::encodePath($epic_iid).'/issues');
+    }
+
+    /**
+     * @param int|string $group_id
+     * @param int        $epic_iid
+     *
+     * @return mixed
+     */
+    public function showDiscussions($group_id, int $epic_iid)
+    {
+        return $this->get('groups/'.self::encodePath($group_id).'/epics/'.self::encodePath($epic_iid).'/discussions');
+    }
+
+    /**
+     * @param int|string $group_id
+     * @param int        $epic_iid
+     *
+     * @return mixed
+     */
+    public function showNotes($group_id, int $epic_iid)
+    {
+        return $this->get('groups/'.self::encodePath($group_id).'/epics/'.self::encodePath($epic_iid).'/notes');
     }
 }
