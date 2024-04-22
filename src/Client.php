@@ -21,6 +21,7 @@ use Gitlab\Api\Events;
 use Gitlab\Api\Groups;
 use Gitlab\Api\GroupsBoards;
 use Gitlab\Api\GroupsEpics;
+use Gitlab\Api\GroupsIterations;
 use Gitlab\Api\GroupsMilestones;
 use Gitlab\Api\IssueBoards;
 use Gitlab\Api\IssueLinks;
@@ -206,6 +207,14 @@ class Client
     public function groupsEpics(): GroupsEpics
     {
         return new GroupsEpics($this);
+    }
+
+    /**
+     * @return GroupsEpics
+     */
+    public function groupsIterations(): GroupsIterations
+    {
+        return new GroupsIterations($this);
     }
 
     /**
