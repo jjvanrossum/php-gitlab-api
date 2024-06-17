@@ -137,4 +137,15 @@ class GroupsEpics extends AbstractApi
     {
         return $this->get('groups/'.self::encodePath($group_id).'/epics/'.self::encodePath($epic_iid).'/notes');
     }
+
+    /**
+     * @param int|string $group_id
+     * @param int        $epic_iid
+     *
+     * @return mixed
+     */
+    public function showResourceLabelEvents($group_id, int $epic_iid)
+    {
+        return $this->get('groups/'.self::encodePath($group_id).'/epics/'.self::encodePath($epic_iid).'/resource_label_events');
+    }
 }

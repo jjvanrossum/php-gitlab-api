@@ -26,6 +26,7 @@ class Projects extends AbstractApi
      *
      *     @var bool               $archived                    limit by archived status
      *     @var string             $visibility                  limit by visibility public, internal, or private
+     *     @var string             $updated_after               limit by updated_after
      *     @var string             $order_by                    Return projects ordered by id, name, path, created_at, updated_at,
      *                                                          last_activity_at, repository_size, storage_size, packages_size or
      *                                                          wiki_size fields (default is created_at)
@@ -72,6 +73,9 @@ class Projects extends AbstractApi
         ;
         $resolver->setDefined('visibility')
             ->setAllowedValues('visibility', ['public', 'internal', 'private'])
+        ;
+        $resolver->setDefined('updated_after')
+            ->setAllowedTypes('updated_after', 'string')
         ;
         $orderBy = [
             'id', 'name', 'path', 'created_at', 'updated_at', 'last_activity_at',
@@ -1415,6 +1419,34 @@ class Projects extends AbstractApi
     public function deployment($project_id, int $deployment_id)
     {
         return $this->get($this->getProjectPath($project_id, 'deployments/'.self::encodePath($deployment_id)));
+    }
+
+    public function releases($project_id, array $parameters = [])
+    {
+        $resolver = $this->createOptionsResolver();
+
+        /*$datetimeNormalizer = function (Options $resolver, \DateTimeInterface $value): string {
+            return $value->format('c');
+        };*/
+
+        $resolver->setDefined('updated_after')
+      //      ->setAllowedTypes('updated_after', \DateTimeInterface::class)
+            ->setAllowedTypes('updated_after', 'string')
+       //     ->setNormalizer('updated_after', $datetimeNormalizer)
+        ;
+
+        return $this->get($this->getProjectPath($project_id, 'releases'), $resolver->resolve($parameters));
+    }
+
+    /**
+     * @param int|string $project_id
+     * @param int        $deployment_id
+     *
+     * @return mixed
+     */
+    public function release($project_id, int $release_id)
+    {
+        return $this->get($this->getProjectPath($project_id, 'releases/'.self::encodePath($release_id)));
     }
 
     /**
