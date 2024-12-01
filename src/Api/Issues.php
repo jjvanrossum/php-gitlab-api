@@ -455,6 +455,29 @@ class Issues extends AbstractApi
     }
 
     /**
+     * @param int|string $project_id
+     * @param int        $issue_iid
+     *
+     * @return mixed
+     */
+    public function showResourceIterationEvents($project_id, int $issue_iid)
+    {
+        return $this->get($this->getProjectPath($project_id, 'issues/'.self::encodePath($issue_iid)).'/resource_iteration_events');
+    }
+
+    /**
+     * @param int|string $project_id
+     * @param int        $issue_iid
+     * @param int        $resource_iteration_event_id
+     *
+     * @return mixed
+     */
+    public function showResourceIterationEvent($project_id, int $issue_iid, int $resource_iteration_event_id)
+    {
+        return $this->get($this->getProjectPath($project_id, 'issues/'.self::encodePath($issue_iid)).'/resource_iteration_events/'.self::encodePath($resource_iteration_event_id));
+    }
+
+    /**
      * @return OptionsResolver
      */
     protected function createOptionsResolver(): OptionsResolver
