@@ -111,8 +111,6 @@ class MergeRequests extends AbstractApi
         ;
 
         $resolver->setDefined('updated_after')
-            ->setAllowedTypes('updated_after', \DateTimeInterface::class)
-            ->setNormalizer('updated_after', $datetimeNormalizer)
         ;
         $resolver->setDefined('updated_before')
             ->setAllowedTypes('updated_before', \DateTimeInterface::class)
