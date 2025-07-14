@@ -111,6 +111,8 @@ class MergeRequests extends AbstractApi
         ;
 
         $resolver->setDefined('updated_after')
+//            ->setAllowedTypes('updated_after', \DateTimeInterface::class)
+//            ->setNormalizer('updated_after', $datetimeNormalizer)
         ;
         $resolver->setDefined('updated_before')
             ->setAllowedTypes('updated_before', \DateTimeInterface::class)
@@ -424,6 +426,17 @@ class MergeRequests extends AbstractApi
     public function closesIssues($project_id, int $mr_iid)
     {
         return $this->get($this->getProjectPath($project_id, 'merge_requests/'.self::encodePath($mr_iid).'/closes_issues'));
+    }
+
+    /**
+     * @param int|string $project_id
+     * @param int        $mr_iid
+     *
+     * @return mixed
+     */
+    public function relatedIssues($project_id, int $mr_iid)
+    {
+        return $this->get($this->getProjectPath($project_id, 'merge_requests/'.self::encodePath($mr_iid).'/related_issues'));
     }
 
     /**
